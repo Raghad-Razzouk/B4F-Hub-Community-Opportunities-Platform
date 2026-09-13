@@ -76,3 +76,133 @@ body {
   margin-top: 8px;
   margin-bottom: 0;
 }
+
+/* --- Community Feed & Post Item Styles --- */
+
+.posts-feed {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.posts-feed h2 {
+  font-size: 18px;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.post-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.post-card:hover {
+  border-color: #cbd5e1;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.post-author {
+  font-weight: 600;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.post-category-badge {
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.post-content {
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.5;
+  margin-bottom: 14px;
+  word-break: break-word;
+}
+
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 10px;
+}
+
+.post-date {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Like Button Styles */
+.like-btn {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.like-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.like-btn.liked {
+  background: #fdf2f8;
+  border-color: #fbcfe8;
+  color: #db2777;
+}
+
+/* Global Feed Messages */
+.message {
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.message.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 16px;
+  border-radius: 8px;
+  color: #991b1b;
+}
+
+.retry-button {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.retry-button:hover {
+  background: #b91c1c;
+}

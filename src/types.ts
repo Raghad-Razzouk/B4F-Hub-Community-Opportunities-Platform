@@ -1,5 +1,9 @@
-
-export type PostCategory = 'announcements' | 'events' | 'community' | 'resources';
+export type PostCategory =
+  | "announcements"
+  | "events"
+  | "community"
+  | "resources";
+export type PostCategoryFilter = "all" | PostCategory;
 
 export interface Post {
   id: string;
@@ -9,15 +13,15 @@ export interface Post {
   category: PostCategory;
   createdAt: string;
   likes: number;
-  isLiked?: boolean;
+  liked?: boolean;
 }
 
 export interface Opportunity {
   id: string;
   title: string;
   company: string;
-  type: 'job' | 'internship' | 'scholarship' | 'volunteer';
-  workMode: 'remote' | 'hybrid' | 'on-site';
+  type: "job" | "internship" | "scholarship" | "volunteer";
+  workMode: "remote" | "hybrid" | "on-site";
   location: string;
   skills: string[];
   description?: string;
@@ -28,5 +32,5 @@ export interface Opportunity {
 export interface AppNotification {
   id: string;
   message: string;
-  type: 'success' | 'error';
+  type: "success" | "error";
 }

@@ -23,6 +23,15 @@ function PostForm({ onPostCreated }: PostFormProps) {
       setError("Post must be at least 3 characters.");
       return;
     }
+
+    if (content.trim().length > 250) {
+      setError("Post is too long. Maximum allowed length is 250 characters.");
+      return;
+    }
+    if (!category) {
+      setError("A category must be selected.");
+      return;
+    }
     setError("");
     onPostCreated({ content, category });
     setContent("");
