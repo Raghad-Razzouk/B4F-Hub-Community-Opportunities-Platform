@@ -1,4 +1,3 @@
-// src/types.ts
 
 export type PostCategory = 'announcements' | 'events' | 'community' | 'resources';
 
