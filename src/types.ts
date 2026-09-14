@@ -1,8 +1,8 @@
 export type PostCategory =
-  | "announcements"
-  | "events"
+  | "announcement"
+  | "event"
   | "community"
-  | "resources";
+  | "resource";
 export type PostCategoryFilter = "all" | PostCategory;
 
 export interface Post {

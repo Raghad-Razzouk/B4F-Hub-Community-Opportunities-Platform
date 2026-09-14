@@ -1,14 +1,32 @@
 import { useState, useEffect } from "react";
-import { Post, PostCategory ,  PostCategoryFilter} from "./types";
+import { Post, PostCategory, PostCategoryFilter } from "./types";
 import { fetchPosts, createPost, toggleLikePost } from "./api";
 import PostForm from "./components/PostForm";
 import PostItem from "./components/PostItem";
+import CommunityFilters from "./components/CommunityFilters";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isloading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [categoryFilter , setCategoryFilter] = useState<PostCategoryFilter>("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] =
+    useState<PostCategoryFilter>("all");
+
+  const filteredPosts = posts.filter((post) => {
+  const matchesCategory =
+    categoryFilter === "all" ||
+    post.category === categoryFilter;
+
+  const matchesSearch =
+    post.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.content.toLowerCase().includes(searchTerm.toLowerCase());
+
+  return matchesCategory && matchesSearch;
+});
+
   async function loadPosts() {
     setLoading(true);
     setError(null);
@@ -32,7 +50,6 @@ function App() {
     const newLikes = newIsLiked ? currentLikes + 1 : currentLikes - 1;
 
     try {
-      
       const updatedPost = await toggleLikePost(postId, newLikes, newIsLiked);
 
       setPosts((prevPosts) =>
@@ -55,40 +72,65 @@ function App() {
       setError("Failed to publish the post; please try again.");
     }
   }
+  function handleCategoryChange(category: PostCategoryFilter) {
+    setCategoryFilter(category);
+    setSearchTerm("");
+  }
   useEffect(() => {
     loadPosts();
   }, []);
   return (
     <div className="app-container">
-      <h1>B4F Hub</h1>
+      <Navbar />
 
-      {isloading && <p className="message">Loading the community feed...</p>}
+      <main className="main-content">
+        {isloading && <p className="message">Loading the community feed...</p>}
 
-      {!isloading && error && (
-        <div className="message error">
-          <p>{error}</p>
-          <button className="retry-button" onClick={loadPosts}>
-            Retry
-          </button>
-        </div>
-      )}
+        {!isloading && error && (
+          <div className="message error">
+            <p>{error}</p>
 
-      {!isloading && !error && (
-        <>
-          <PostForm onPostCreated={handleNewPostCreation} />
-          <div className="posts-feed">
-            <h2>Community Feed ({posts.length})</h2>
-            {posts.map((post) => (
-              <PostItem
-                key={post.id}
-                post={post}
-                onLikeToggle={handleLikeToggle}
-              />
-            ))}
+            <button className="retry-button" onClick={loadPosts}>
+              Retry
+            </button>
           </div>
-          <p>{posts.length} posts successfully loaded !</p>
-        </>
-      )}
+        )}
+
+        {!isloading && !error && (
+          <section className="community-section">
+            <h2>Community</h2>
+
+            <PostForm onPostCreated={handleNewPostCreation} />
+
+            <div className="posts-feed">
+              <CommunityFilters
+                categoryFilter={categoryFilter}
+                onCategoryChange={handleCategoryChange}
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+              />
+
+              <h3>
+                {filteredPosts.length} of {posts.length} posts shown
+              </h3>
+
+              {filteredPosts.length === 0 ? (
+                <p className="message"> No posts found for this category.</p>
+              ) : (
+                filteredPosts.map((post) => (
+                  <PostItem
+                    key={post.id}
+                    post={post}
+                    onLikeToggle={handleLikeToggle}
+                  />
+                ))
+              )}
+            </div>
+          </section>
+        )}
+      </main>
+
+      <Footer />
     </div>
   );
 }

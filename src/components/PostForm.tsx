@@ -1,5 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from "react";
-import { PostCategory } from "../types";
+import { PostCategory  } from "../types";
 
 interface PostFormProps {
   onPostCreated: (newPostData: {
@@ -12,6 +12,13 @@ function PostForm({ onPostCreated }: PostFormProps) {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState<PostCategory>("community");
   const [error, setError] = useState("");
+
+  const categories: PostCategory[] = [
+    "community",
+    "announcement",
+    "event",
+    "resource",
+  ];
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -32,6 +39,7 @@ function PostForm({ onPostCreated }: PostFormProps) {
       setError("A category must be selected.");
       return;
     }
+    
     setError("");
     onPostCreated({ content, category });
     setContent("");
@@ -40,6 +48,11 @@ function PostForm({ onPostCreated }: PostFormProps) {
 
   function handleContant(event: ChangeEvent<HTMLTextAreaElement>) {
     setContent(event.target.value);
+    if(!event.target.value)
+    {
+      setError("");
+    }
+    
   }
 
   function handleCategoryChange(event: ChangeEvent<HTMLSelectElement>) {
@@ -51,7 +64,7 @@ function PostForm({ onPostCreated }: PostFormProps) {
       <form className="create-post-form" onSubmit={handleSubmit}>
         <textarea
           className="post-textarea"
-          placeholder={`Share something with the ${category}...`}
+          placeholder={`Share something with the community...`}
           value={content}
           onChange={handleContant}
           rows={3}/>
@@ -60,10 +73,10 @@ function PostForm({ onPostCreated }: PostFormProps) {
             className="category-select"
             value={category}
             onChange={handleCategoryChange}>
-            <option value="community">Community</option>
-            <option value="announcements">Announcements</option>
-            <option value="events">Events</option>
-            <option value="resources">Resources</option>
+     
+            {categories.map((category)=>(
+              <option key={category} value={category}>{category}</option>
+            ))}
           </select>
           <button type="submit" className="submit-btn">
             Post
