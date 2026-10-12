@@ -5,6 +5,18 @@ export type PostCategory =
   | "resource";
 export type PostCategoryFilter = "all" | PostCategory;
 
+export type OpportunityType =
+  | "job"
+  | "internship"
+  | "scholarship"
+  | "volunteer";
+
+export type WorkMode = "remote" | "hybrid" | "on-site";
+
+export type OpportunityTypeFilter = "all" | OpportunityType;
+
+export type WorkModeFilter = "all" | WorkMode;
+
 export interface Post {
   id: string;
   author: string;
@@ -20,8 +32,8 @@ export interface Opportunity {
   id: string;
   title: string;
   company: string;
-  type: "job" | "internship" | "scholarship" | "volunteer";
-  workMode: "remote" | "hybrid" | "on-site";
+  type: OpportunityType;
+  workMode:  WorkMode;
   location: string;
   skills: string[];
   description?: string;

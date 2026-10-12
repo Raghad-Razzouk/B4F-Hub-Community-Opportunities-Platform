@@ -1,3 +1,40 @@
+/* ==========================================================================
+   0. متغيرات الألوان المحسنة والمصلحة تماماً للـ Light والـ Dark Mode
+   ========================================================================== */
+:root {
+  --bg-body: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-navbar: #ffffff;
+  --text-main: #334155;
+  --text-heading: #1e293b;
+  --text-muted: #94a3b8;
+  --border-main: #e2e8f0;
+  --border-input: #cbd5e1;
+  --bg-badge: #f1f5f9;
+  --text-badge: #475569;
+  --bg-btn-applied: #f1f5f9;
+  --text-btn-applied: #94a3b8;
+}
+
+/* إصلاح شامل وجذري لألوان الوضع الليلي لتصبح متناسقة واحترافية */
+body.dark {
+  --bg-body: #0b0f19;        /* خلفية داكنة ناعمة وفخمة */
+  --bg-card: #151f32;        /* لون الكروت متباين وممتاز للقراءة */
+  --bg-navbar: #151f32;
+  --text-main: #94a3b8;      /* نصوص رمادية فاتحة مريحة جداً للعين */
+  --text-heading: #f8fafc;   /* عناوين بيضاء ناصعة وواضحة */
+  --text-muted: #4b5563;
+  --border-main: #223147;    /* حدود خفيفة مريحة لا تسبب لخبطة بصرية */
+  --border-input: #2d3d57;
+  --bg-badge: #223147;
+  --text-badge: #cbd5e1;
+  --bg-btn-applied: #1f293d;
+  --text-btn-applied: #4b5563;
+}
+
+/* ==========================================================================
+   1. إعدادات الهيكل العام والتوزيع (Layout)
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -6,45 +43,571 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: #f8fafc;
-  color: #334155;
-  margin: 0;
-  padding: 0;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  overflow: hidden; /* يمنع السكرول الكلي للموقع للحفاظ على ثبات الهيدر */
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .app-container {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/*Main Box Model*/
-.create-post-form {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
 .main-content {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+ padding: 8px 20px 8px 20px;
   flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.community-section,
+.opportunities-section {
+  min-width: 0;
+  min-height: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.community-section h2,
+.opportunities-section h2 {
+  margin-top: 18px;
+  margin-bottom: 0px;
+  color: var(--text-heading);
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.posts-feed,
+.opportunities-feed {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.posts-feed h3,
+.opportunities-section > h3 {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   2. شريط التنقل وزر التبديل (Navbar)
+   ========================================================================== */
+/* ==========================================================================
+   5. شريط التنقل وزر التبديل (Navbar) - تم تكبيره شوية صغيرة
+   ========================================================================== */
+.navbar {
+  width: 100%;
+  background: var(--bg-navbar);
+  border-bottom: 1px solid var(--border-main);
+  padding: 14px 24px; /* 👈 تم زيادة الحشو من 10px إلى 14px لتكبير الارتفاع قليلاً */
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* زيادة التباعد بين اللوجو والكلام */
+}
+
+.navbar-logo {
+  width: 36px;  /* 👈 تكبير اللوجو ليناسب الحجم الجديد */
+  height: 26px;
+  border-radius: 6px;
+  background: #4f46e5;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.navbar h1 {
+  font-size: 17px; /* 👈 تكبير عنوان الموقع الرئيسي من 15px إلى 17px */
+  margin: 0;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.navbar p {
+  font-size: 11px; /* 👈 تكبير الوصف الفرعي من 9px إلى 11px */
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+
+.theme-toggle-btn {
+  background: var(--bg-body);
+  color: var(--text-heading);
+  border: 1px solid var(--border-input);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  border-color: #4f46e5;
+  background-color: var(--border-main);
+}
+
+/* ==========================================================================
+   3. فلاتر المجتمع وزر Liked only بجانبه ثابتين
+   ========================================================================== */
+.community-filters-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.community-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1;   
+}
+
+.community-filters button {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-input);
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.community-filters button.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.community-filters input {
+  width: 100%;
+  max-width: 160px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-input);
+  background-color: var(--bg-card);
+  color: var(--text-heading);
+  border-radius: 20px;
+  font-size: 12px;
+  outline: none;
+}
+
+.comm-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-main);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.comm-checkbox-label input {
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+  accent-color: #2563eb;
+}
+
+/* ==========================================================================
+   4. فلاتر الفرص وزر Saved only بجانبه ثابتين
+   ========================================================================== */
+.opportunities-filters-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.opportunity-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.opportunity-filters input {
+  flex: 1;
+  min-width: 150px;
+  padding: 5px 12px;
+  border: 1px solid var(--border-input);
+  border-radius: 20px;
+  font-size: 12px;
+  background-color: var(--bg-card);
+  color: var(--text-heading);
+  outline: none;
+}
+
+.opportunity-filters select {
+  padding: 5px 12px;
+  border: 1px solid var(--border-main);
+  border-radius: 20px;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}
+/* حاوية تجمع مربع الشعار مع النصوص أفقياً */
+.opp-company-wrapper {
+  display: flex;
+  align-items: center; /* توسيط العناصر عمودياً */
+  gap: 12px; /* مسافة مريحة تفصل المربع عن نصوص الوظيفة */
+}
+
+/* 👈 تصميم مربع شعار الشركة (الحرفين) ليطابق الصورة */
+.company-logo {
+  width: 42px; /* حجم مربع متوازن وممتاز للرؤية */
+  height: 42px;
+  background-color: #f59e0b; /* لون برتقالي دافئ وجذاب كالصورة المرجعية */
+  color: #ffffff; /* حروف بيضاء بارزة */
+  border-radius: 8px; /* حواف دائرية ناعمة */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* توسيط الحرفين في المنتصف تماماً */
+  font-size: 14px;
+  font-weight: 700; /* خط سميك وواضح */
+  flex-shrink: 0; /* منع المربع من الانضغاط */
+  user-select: none;
+}
+
+/* تلوين مربع الشعار بلون أزرق داكن في الوضع الليلي ليتناسق بجمال مع التصميم المظلم */
+body.dark .company-logo {
+  background-color: #3b82f6; 
+}
+
+/* ضبط المسافات الرأسية للنصوص بجانب المربع */
+.opp-meta-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.opp-company-name {
+  font-size: 12px;
+  color: #4f46e5;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+body.dark .opp-company-name {
+  color: #6366f1;
+}
+
+.opp-location {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.opp-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-main);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.opp-checkbox-label input {
+  width: 14px;
+  height: 14px;
+  accent-color: #4f46e5;
+}
+
+/* ==========================================================================
+   5. كروت قسم الفرص (Opportunity Cards) والتفاصيل
+   ========================================================================== */
+.opportunity-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: 10px;
+  padding: 16px;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.opportunity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.opportunity-card h3 {
+  margin: 0;
+  color: var(--text-heading);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.opportunity-card p {
+  margin: 3px 0 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.opportunity-star {
+  color: #64748b !important;
+  font-size: 26px !important; 
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.opportunity-star.saved {
+  color: #eab308 !important; 
+}
+
+.opportunity-info,
+.opportunity-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.opportunity-card span {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.opportunity-info span {
+  background: var(--bg-badge);
+  color: var(--text-badge);
+}
+
+.opportunity-info span:first-child {
+  background: #eef2ff;
+  color: #3730a3;
+  text-transform: capitalize;
+}
+
+body.dark .opportunity-info span:first-child {
+  background: #223147;
+  color: #6366f1;
+}
+
+.opportunity-skills span {
+  background: var(--bg-body);
+  border: 1px solid var(--border-main);
+  color: var(--text-main);
+  border-radius: 6px;
+}
+
+.opportunity-details-panel {
+  background: var(--bg-body);
+  border: 1px solid var(--border-main);
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+.opportunity-details-panel h4 {
+  color: var(--text-heading);
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.opp-deadline {
+  margin-top: 6px !important;
+  font-weight: 500;
+  color: #ef4444 !important;
+}
+
+.opportunity-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  border-top: 1px solid var(--border-main);
+  padding-top: 12px;
+}
+
+.details-btn {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-input);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.apply-btn {
+  background: #4f46e5;
+  color: #ffffff;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.apply-btn.applied {
+  background: var(--bg-btn-applied) !important;
+  color: var(--text-btn-applied) !important;
+  border: 1px solid var(--border-main) !important;
+}
+
+/* ==========================================================================
+   6. كروت قسم المجتمع (Community Feed) وتحديد الأحرف
+   ========================================================================== */
+/* ==========================================================================
+   تنسيق صندوق كتابة المنشور بقسم المجتمع - تم تصغيره
+   ========================================================================== */
+.create-post-form {
+  background: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: 8px;
+  padding: 10px 14px; /* 👈 تم تقليص الحشو العلوي والسفلي من 14px إلى 10px لجعله أنحف */
+  margin-bottom: 10px; /* تقليص المسافة بينه وبين الفلاتر */
+  flex-shrink: 0;
 }
 
 .post-textarea {
   width: 100%;
-  padding: 12px;
+  padding: 8px 12px; /* 👈 تقليص الحشو الداخلي لمربع الكتابة */
   border-radius: 6px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border-input);
+  background-color: var(--bg-card);
+  color: var(--text-heading);
   resize: none;
-  font-size: 14px;
-  box-sizing: border-box;
-  margin-bottom: 12px;
-  font-family: inherit;
+  font-size: 13px; /* تصغير الخط قليلاً ليصبح ناعماً */
+  margin-bottom: 8px; /* مسافة أقل قبل العداد السفلية */
+  outline: none;
+  height: 65px; /* 👈 تحديد ارتفاع ثابت وأصغر لمربع الكتابة */
+}
+
+/* تنسيق عداد الأحرف تحت المربع مباشرة */
+.char-counter {
+  display: block;
+  text-align: right;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: -4px;  
+  margin-bottom: 6px; 
+  user-select: none;
+}
+
+
+/* تنسيق مستقل لعداد الأحرف المستقل ليظهر تحت مربع النص مباشرة */
+.char-counter {
+  display: block;
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: -6px;  
+  margin-bottom: 10px; 
+  user-select: none;
+}
+/* حاوية معلومات الكاتب تضمن اصطفاف المربع بجانب النصوص أفقيّاً */
+.post-author-info {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* مسافة ناعمة تفصل المربع عن اسم الكاتب */
+}
+
+/* 👈 تصغير مربع أول حرفين وتنسيقه ليصبح ناعماً جداً ومربعاً كالصورة */
+.post-avatar {
+  width: 32px;  /* تصغير العرض */
+  height: 32px; /* تصغير الارتفاع */
+  border-radius: 6px; /* حواف دائرية ناعمة للمربع (وليس دائرة كاملة) */
+  background: #4f46e5; /* اللون الأساسي للمشروع */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px; /* خط أصغر يناسب المربع الجديد */
+  font-weight: 700;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+body.dark .post-avatar {
+  background: #6366f1; /* لون أفتح متناسق مع الوضع المظلم */
+}
+
+/* ترتيب الاسم والتاريخ عمودياً بجانب المربع المصغر */
+.post-author-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.post-author {
+  font-weight: 600;
+  font-size: 13px; /* خط أنعم للاسم */
+  color: var(--text-heading);
+}
+
+.post-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.char-limit-reached {
+  color: #ef4444 !important;
+  font-weight: 600;
 }
 
 .form-footer {
@@ -54,62 +617,33 @@ body {
 }
 
 .category-select {
-  padding: 8px 12px;
+  padding: 7px 12px;
   border-radius: 6px;
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  font-size: 14px;
+  border: 1px solid var(--border-input);
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  font-size: 13px;
+  outline: none;
 }
 
 .submit-btn {
   background: #2563eb;
   color: #fff;
   border: none;
-  padding: 8px 18px;
+  padding: 7px 16px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
-  transition: background 0.2s;
-}
-
-.submit-btn:hover {
-  background: #1d4ed8;
-}
-
-.error-msg {
-  color: #dc2626;
-  font-size: 13px;
-  margin-top: 8px;
-  margin-bottom: 0;
-}
-
-/* --- Community Feed & Post Item Styles --- */
-
-.posts-feed {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.posts-feed h2 {
-  font-size: 18px;
-  color: #1e293b;
-  margin-bottom: 12px;
 }
 
 .post-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-main);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
-}
-
-.post-card:hover {
-  border-color: #cbd5e1;
+  width: 100%;
+  flex-shrink: 0;
 }
 
 .post-header {
@@ -122,7 +656,7 @@ body {
 .post-author-info {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .post-avatar {
@@ -138,74 +672,123 @@ body {
   font-weight: 700;
 }
 
+.post-author-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+}
+
 .post-author {
   font-weight: 600;
   font-size: 14px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
-.post-category-badge {
-  background: #eff6ff;
-  color: #1d4ed8;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-weight: 500;
-  text-transform: capitalize;
+.post-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 .post-content {
   font-size: 14px;
-  color: #334155;
-  line-height: 1.5;
-  margin-bottom: 14px;
-  word-break: break-word;
+  color: var(--text-main);
+  margin-bottom: 12px;
 }
 
 .post-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--border-main);
   padding-top: 10px;
+  margin-top: 10px;
 }
 
-.post-date {
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-/* Like Button Styles */
 .like-btn {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #475569;
-  padding: 6px 12px;
+  background: var(--bg-body);
+  border: 1px solid var(--border-main);
+  color: var(--text-main);
+  padding: 5px 12px;
+  font-size: 13px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
+}
+
+/* ==========================================================================
+   7. تنسيق الفوتر المطور والإحصائيات الكبيرة (Footer & Large Stats)
+   ========================================================================== */
+.footer {
+  width: 100%;
+  background: var(--bg-navbar);
+  border-top: 1px solid var(--border-main);
+  padding: 8px 24px; /* حشو عريض للفوتر */
+  flex-shrink: 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.footer-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; /* الحقوق لليسار والعدادات لليمين تماماً */
+  align-items: center;
+}
+
+.footer-left {
+  text-align: left; /* إجبار نصوص الحقوق للجهة اليسرى */
+}
+
+.footer-left p {
+  font-size: 11px; /* خط كبير للحقوق */
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.footer-left span {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.footer-right {
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
+  gap: 28px; /* تباعد كبير بين العدادات الحية */
 }
 
-.like-btn:hover {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
+.stat-item {
+  display: flex;
+  align-items: center; /* اصطفاف أفقي للإيموجي والعداد */
+  gap: 8px;
+  font-size: 15px; /* خط كبير ومقروء */
+  user-select: none;
 }
 
-.like-btn.liked {
-  background: #fdf2f8;
-  border-color: #fbcfe8;
-  color: #db2777;
+.stat-label {
+  color: var(--text-heading);
+  font-weight: 600;
 }
 
-/* Global Feed Messages */
+.stat-number {
+  font-size: 16px; /* خط عداد عريض وضخم */
+  font-weight: 800;
+  color: #4f46e5;
+  background: var(--bg-body);
+  padding: 4px 12px; /* حشو داخلي عريض للأزرار لتبدو ضخمة بارزة */
+  border-radius: 8px;
+  border: 1px solid var(--border-main);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+body.dark .stat-number {
+  color: #6366f1;
+}
+
+/* رسائل النظام العامة */
 .message {
   text-align: center;
-  color: #64748b;
+  color: var(--text-main);
   font-size: 14px;
   margin-top: 20px;
 }
@@ -216,6 +799,12 @@ body {
   padding: 16px;
   border-radius: 8px;
   color: #991b1b;
+}
+
+body.dark .message.error {
+  background: #221515;
+  border-color: #4c1d1d;
+  color: #fca5a5;
 }
 
 .retry-button {
@@ -229,115 +818,21 @@ body {
   margin-top: 10px;
 }
 
-.retry-button:hover {
-  background: #b91c1c;
+/* ستايل شريط التمرير الناعم والوسط */
+.posts-feed::-webkit-scrollbar,
+.opportunities-feed::-webkit-scrollbar {
+  width: 5px;
+}
+.posts-feed::-webkit-scrollbar-thumb,
+.opportunities-feed::-webkit-scrollbar-thumb {
+  background: var(--border-input);
+  border-radius: 10px;
 }
 
-.community-filters {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.community-filters button {
-  background: #ffffff;
-  color: #475569;
-  border: 1px solid #cbd5e1;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.community-filters button:hover {
-  background: #f1f5f9;
-  border-color: #94a3b8;
-}
-
-.community-filters button.active {
-  background: #2563eb;
-  color: #ffffff;
-  border-color: #2563eb;
-}
-
-.navbar {
-  width: 100%;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 12px 20px;
-  margin-bottom: 16px;
-}
-
-.navbar-brand {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.navbar-logo {
-  width: 32px;
-  height: 24px;
-  border-radius: 5px;
-  background: #4f46e5;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.community-filters input {
-  width: 100%;
-  max-width: 280px;
-  padding: 9px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 20px;
-  background: #ffffff;
-  color: #334155;
-  font-size: 13px;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.community-filters input::placeholder {
-  color: #94a3b8;
-}
-
-.community-filters input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.navbar h1 {
-  font-size: 16px;
-  margin: 0;
-}
-
-.navbar p {
-  font-size: 9px;
-  color: #64748b;
-  margin-top: 2px;
-}
-
-.footer {
-  width: 100%;
-  background: #ffffff;
-  border-top: 1px solid #e2e8f0;
-  padding: 10px 20px;
-  margin-top: 16px;
-  text-align: center;
-  font-size: 10px;
-  color: #64748b;
-}
-
-.footer span {
-  display: block;
-  font-size: 9px;
-  margin-top: 3px;
+/* التجاوب مع الموبايل (Responsive Layout) */
+@media (max-width: 768px) {
+  body { overflow: auto; }
+  .app-container { height: auto; }
+  .main-content { grid-template-columns: 1fr; max-height: none; overflow: visible; }
+  .posts-feed, .opportunities-feed { overflow-y: visible; }
 }

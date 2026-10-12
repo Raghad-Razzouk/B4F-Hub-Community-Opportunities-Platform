@@ -2,11 +2,7 @@ import { Post } from "../types";
 
 interface PostItemProps {
   post: Post;
-  onLikeToggle: (
-    postId: string,
-    currentLikes: number,
-    currentIsLiked?: boolean,
-  ) => void;
+  onLikeToggle: (id: string, currentLikes: number, currentIsLiked?: boolean) => Promise<void>;
 }
 
 function PostItem({ post, onLikeToggle }: PostItemProps) {
@@ -14,24 +10,29 @@ function PostItem({ post, onLikeToggle }: PostItemProps) {
     <div className="post-card">
       <div className="post-header">
         <div className="post-author-info">
-          <span className="post-avatar">{post.avatar}</span>
-          <span className="post-author">{post.author}</span>
+          <div className="post-avatar">
+            {post.author.substring(0, 2).toUpperCase()}
+          </div>
+          
+          <div className="post-author-meta">
+            <span className="post-author">{post.author}</span>
+<span className="post-date">{post.createdAt.substring(0, 10)}</span>
+          </div>
         </div>
 
         <span className="post-category-badge">{post.category}</span>
       </div>
 
-      <p className="post-content">{post.content}</p>
+      <div className="post-content">
+        <p>{post.content}</p>
+      </div>
 
       <div className="post-footer">
-        <span className="post-date">
-          {new Date(post.createdAt).toLocaleDateString()}
-        </span>
-
-        <button
-          className={`like-btn ${post.liked ? "liked" : ""}`}
-          onClick={() => onLikeToggle(post.id, post.likes, post.liked)}>
-          {post.liked ? "💜" : "♡"} {post.likes}
+        <button 
+          className={`like-btn ${post.liked ? 'liked' : ''}`}
+          onClick={() => onLikeToggle(post.id, post.likes, post.liked)}
+        >
+          {post.liked ? "❤️" : "🤍"} {post.likes} Likes
         </button>
       </div>
     </div>

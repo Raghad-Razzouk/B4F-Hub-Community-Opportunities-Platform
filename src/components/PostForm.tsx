@@ -1,5 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from "react";
-import { PostCategory  } from "../types";
+import { PostCategory } from "../types";
 
 interface PostFormProps {
   onPostCreated: (newPostData: {
@@ -20,19 +20,21 @@ function PostForm({ onPostCreated }: PostFormProps) {
     "resource",
   ];
 
+  const MIN_CHARS = 3;
+  const MAX_CHARS = 400;
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!content.trim()) {
       setError("Post content cannot be empty.");
       return;
     }
-    if (content.trim().length < 3) {
-      setError("Post must be at least 3 characters.");
+    if (content.trim().length < MIN_CHARS) {
+      setError(`Post must be at least ${MIN_CHARS} characters.`);
       return;
     }
-
-    if (content.trim().length > 250) {
-      setError("Post is too long. Maximum allowed length is 250 characters.");
+    if (content.length > MAX_CHARS) {
+      setError(`Post is too long. Maximum allowed length is ${MAX_CHARS} characters.`);
       return;
     }
     if (!category) {
@@ -47,12 +49,13 @@ function PostForm({ onPostCreated }: PostFormProps) {
   }
 
   function handleContant(event: ChangeEvent<HTMLTextAreaElement>) {
-    setContent(event.target.value);
-    if(!event.target.value)
-    {
-      setError("");
+    if (event.target.value.length <= MAX_CHARS) {
+      setContent(event.target.value);
     }
     
+    if (!event.target.value) {
+      setError("");
+    }
   }
 
   function handleCategoryChange(event: ChangeEvent<HTMLSelectElement>) {
@@ -67,18 +70,31 @@ function PostForm({ onPostCreated }: PostFormProps) {
           placeholder={`Share something with the community...`}
           value={content}
           onChange={handleContant}
-          rows={3}/>
+          rows={3}
+          maxLength={MAX_CHARS}
+        />
+
+        <div className="char-counter">
+          <span className={content.length >= MAX_CHARS ? "char-limit-reached" : ""}>
+            {MAX_CHARS - content.length} characters left
+          </span>
+        </div>
+
         <div className="form-footer">
           <select
             className="category-select"
             value={category}
             onChange={handleCategoryChange}>
-     
-            {categories.map((category)=>(
+            {categories.map((category) => (
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
-          <button type="submit" className="submit-btn">
+          
+          <button 
+            type="submit" 
+            className="submit-btn"
+            disabled={content.trim().length < MIN_CHARS}
+          >
             Post
           </button>
         </div>

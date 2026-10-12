@@ -1,5 +1,7 @@
-import { Post, PostCategory } from "./types";
+import { Post, PostCategory, Opportunity } from "./types";
+
 const API_POST = "/api/posts";
+const API_OPPORTUNITIES = "/api/opportunities";
 
 export async function fetchPosts() {
   const response = await fetch(API_POST);
@@ -44,9 +46,42 @@ export async function toggleLikePost(
   });
 
   if (!response.ok) {
-    
     throw new Error("Failed to update like status");
   }
 
   return await response.json();
+}
+
+export async function fetchOpportunities() {
+  const response = await fetch(API_OPPORTUNITIES);
+  const opportunities = (await response.json()) as Opportunity[];
+
+  return opportunities;
+}
+
+export async function applyToOpportunity(
+  opportunityId: string,
+) {
+  const response = await fetch(
+    `${API_OPPORTUNITIES}/${opportunityId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        applied: true,
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => null);
+
+    throw new Error(
+      errorData?.message || "Failed to apply",
+    );
+  }
+
+  return (await response.json()) as Opportunity;
 }
